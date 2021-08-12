@@ -1,64 +1,69 @@
-import React,{useState} from 'react';
-import {View, TextInput, Button, StyleSheet, Modal} from 'react-native';
-
-
+import React, { useState } from 'react';
+import { View, TextInput, Button, StyleSheet, Modal } from 'react-native';
+import FirebaseUtil from './FirebaseUtil';
+import { modalComponent } from './Styles';
 
 
 const GoalInput = props => {
-    const [enteredGoal,setEnteredGoal] = useState('');
+    const [enteredGoal, setEnteredGoal] = useState('');
+    const [hasData, setHasData] = useState(false)
 
-    const goalInputHandler =(enteredText) =>{
+    const goalInputHandler = (enteredText) => {
         setEnteredGoal(enteredText);
-      };
-      const addGoalHandler = () =>{
+    };
+    const addGoalHandler = () => {
         props.onAddGoal(enteredGoal);
         setEnteredGoal('');
-      }
+        setHasData(true);
+    }
 
     return (
-        <Modal visible ={props.visible} animationType="slide">
-        <View style={styles.inputContainer}>
-        <TextInput placeholder="Course Goal" 
-        style={styles.input}
-        onChangeText={goalInputHandler} 
-        value={enteredGoal}/>
-        <View style= {styles.buttonContainer}>
+        <Modal visible={props.visible} animationType="slide">
+            <View style={styles.inputContainer}>
+                <TextInput placeholder="Enter work details"
+                    style={styles.input}
+                    onChangeText={goalInputHandler}
+                    value={enteredGoal} />
+                <View style={styles.buttonContainer}>
 
-        <View style = {styles.button}>
-                <Button  title="CANCEL" color="red" onPress={props.onCancel} />
-        </View>
-        <View style={styles.button}>
-               <Button title="ADD" onPress={addGoalHandler}/>
-        </View>
-        </View>
-        </View>
+                    <View style={styles.button}>
+                        <Button title="CANCEL" color="red" onPress={props.onCancel} />
+                    </View>
+                    <View style={styles.button}>
+                        <Button title="ADD" onPress={addGoalHandler} />
+                    </View>
+                </View>
+                {
+                    <FirebaseUtil data={enteredGoal} />
+                }
+            </View>
         </Modal>
-        );
+    );
 }
 
-const styles = StyleSheet.create({ 
-    inputContainer :{
-        flex :1,
-        justifyContent:'center',
-        alignItems:'center'
-       },
-       input:{
-        width:300,
-        borderColor:'black', 
-        borderWidth:2,
-        padding:3,
-        marginBottom:10
+const styles = StyleSheet.create({
+    inputContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    buttonContainer:{
-        flexDirection:"row",
-        justifyContent:"space-between",
-        width:'50%'
+    input: {
+        width: 280,
+        borderColor: 'black',
+        borderWidth: 2,
+        padding: 10,
+        marginBottom: 10
     },
-    button:{
+    buttonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: '50%'
+    },
+    button: {
         width: "40%"
     }
-      
+
 });
- 
+
 
 export default GoalInput;

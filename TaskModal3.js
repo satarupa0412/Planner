@@ -9,8 +9,6 @@ export default function TaskModal2() {
   const [courseGoals, setCourseGoals] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false);
 
-  console.log('dgsjhdjsjd');
-
   const addGoalHandler = goalTitle => {
     if (goalTitle.length === 0) {
       return;
@@ -34,7 +32,7 @@ export default function TaskModal2() {
 
   return (
     <View style={styles.screen}>
-      <Button title='ADD NEW WORK' onPress={() => setIsAddMode(true)} />
+      <Button title='ADD NEW STUDY' onPress={() => setIsAddMode(true)} />
       <GoalInput visible={isAddMode} onAddGoal={addGoalHandler} onCancel={cancelAddGoalHandler} />
       <FlatList
         data={courseGoals}
